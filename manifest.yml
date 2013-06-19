@@ -1,0 +1,17 @@
+---
+applications:
+  dist\foobar-1.0-SNAPSHOT.zip:
+    name: unbe
+    framework:
+      name: play
+      info:
+        mem: 512M
+        description: Play Framework Application
+        exec: 
+    infra: eu-aws
+    url: ${name}.${target-base}
+    mem: 512M
+    instances: 1
+    services:
+      unbe:
+        type: mysql

@@ -1,0 +1,19 @@
+@(user: User)
+
+@import mainparts.profile
+@import play.i18n._
+
+
+@profile(user){
+<div class="user-profile">
+    <div class="fullname">@user.name @user.secondName</div>
+    <dl>
+        <dt>Дата регистрации:</dt>
+        <dd>@user.registerDate.format("dd MMM yyyy")</dd>
+        <dt>Откуда:</dt>
+        <dd>@user.whereFrom</dd>
+        <dt>Пол:</dt>
+        <dd>@Messages.get(user.gender.toString())</dd>
+    </dl>
+</div>
+}

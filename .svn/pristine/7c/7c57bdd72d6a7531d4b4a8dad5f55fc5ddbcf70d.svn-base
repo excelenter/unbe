@@ -1,0 +1,96 @@
+package controllers;
+
+import models.Cycle;
+import models.User;
+import org.apache.commons.io.*;
+import play.data.Form;
+import play.mvc.Controller;
+import play.mvc.Http;
+import play.mvc.Result;
+import views.html.mainparts.profileparts.pcyclesinfo;
+import views.html.mainparts.profileparts.pgeneralinfo;
+import views.html.mainparts.profileparts.pprojectsinfo;
+import views.html.mainparts.profileparts.pusersettings;
+import play.libs.
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static play.data.Form.form;
+
+/**
+ * Created by:
+ * User: mayatskiy
+ * Date: 17.04.13
+ * Time: 19:11
+ */
+public class Profile extends Controller {
+
+    public static List<String> genderList = User.Gender.toStringList();
+
+    public static class Settings {
+
+        public String email;
+        public String password;
+        public String name;
+        public String secondName;
+        public String whereFrom;
+        public String userAvatar;
+        public User.Gender gender;
+
+    }
+
+
+    public static Result userCycles(long id) {
+        List<Cycle> cycles = Cycle.showAuthorCycles(User.find.byId(id));
+        return ok(pcyclesinfo.render(User.find.byId(id), cycles));
+    }
+
+
+    public static Result profile(long id){
+        return ok(pgeneralinfo.render(User.find.byId(id)));
+    }
+
+    public static Result userProjects(long id){
+        List<Project> projects = new ArrayList();
+        return ok(pprojectsinfo.render(User.find.byId(id), projects));
+    }
+
+    public static Result userSettings(long id){
+        return ok(pusersettings.render(User.find.byId(id), form(Settings.class), genderList));
+    }
+
+    public static Result saveSettings(long id) throws IOException {
+        User user = User.find.byId(id);
+        Form<Settings> settingsForm = form(Settings.class).bindFromRequest();
+        if (settingsForm.hasErrors()) {
+            return badRequest(pusersettings.render(user,settingsForm,genderList));
+        } else {
+            user.name = settingsForm.get().name;
+            user.email = settingsForm.get().email;
+            if(settingsForm.get().password!="")
+                user.password = settingsForm.get().password;
+            user.secondName = settingsForm.get().secondName;
+            user.whereFrom = settingsForm.get().whereFrom;
+            user.userAvatar = settingsForm.get().userAvatar;
+            user.gender = settingsForm.get().gender;
+
+            Http.MultipartFormData body = request().body().asMultipartFormData();
+            Http.MultipartFormData.FilePart picture = body.getFile("userAvatar");
+
+            String fileName = picture.getFilename();
+            String relativePath = "//public//uploads//avatars/" + id + "_" + fileName;
+            File file = picture.getFile();
+
+            File destinationFile = new File(play.Play.application().path().toString() + relativePath);
+            FileUtils.copyFile(file, destinationFile);
+            user.userAvatar = "uploads/avatars/" + id + "_" + fileName;
+
+            user.update();
+            flash("success", "Данные успешно обновлены");
+            return ok(pusersettings.render(user, form(Settings.class),genderList));
+        }
+    }
+}

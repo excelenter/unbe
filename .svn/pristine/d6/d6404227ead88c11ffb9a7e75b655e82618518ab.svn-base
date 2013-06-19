@@ -1,0 +1,81 @@
+usersStatuses:
+
+ - &usadmin !!models.UserStatus
+  title: Admin
+
+ - &usannon !!models.UserStatus
+  title: Annonimus
+
+ - &usnewbe !!models.UserStatus
+  title: Newbe
+
+articleTypes:
+
+ - &atnews !!models.ArticleType
+  title: Новость
+
+articleAreas:
+
+  - &aanews !!models.ArticleArea
+   title: Новости
+
+users:
+
+ - &ubob !!models.User
+  email:      bob@gmail.com
+  name:       Bob
+  secondName: Bobovich
+  password:   secret
+  userStatus: *usannon
+
+ - &uvalery !!models.User
+  email:        valera-sochi@bk.ru
+  name:         Валерий
+  secondName:   Маяцкий
+  registerDate: 2013-02-05
+  password:     123
+  userStatus:   *usadmin
+  whereFrom:    Сант-Петербург
+
+cycles:
+
+ - !!models.Cycle
+  title:          What did you do with foto?
+  description:    Simple tolking about your foto experience
+  creator:        *uvalery
+
+ - !!models.Cycle
+  title:          How to use the camera!
+  description:    Simple works
+  creator:        *uvalery
+
+ - !!models.Cycle
+  title:          Seven!
+  description:    Simple seven
+  creator:        *ubob
+
+ - &cnews !!models.Cycle
+  title:          Новости!
+  description:    Новости сообщества unbe.
+  creator:        *uvalery
+
+articles:
+
+ - !!models.Article
+  title: Эпизод 1 "Чудеса"
+  content: Сегодня были отсняты материалы для эпизода 1. Ребята хорошо потрудились. Съемки заняли четыре часа времени, а бюджет эпизода впервые чуть было не сдвинулся со стандартной отметки в 0 руб. Но ребята справились с этой проблемой, с чем мы их и поздравляем.
+  parentCycle: *cnews
+  publishDate: 2011-03-25
+  listImage: news/03042011.png
+  articleType: *atnews
+  articleArea: *aanews
+
+ - !!models.Article
+  title: Эпизод 3 "Ребятки"
+  content: Завершен съемочный день третьего эпизода. Материалы готовы к монтажу, эффектам и переозвучке. Скоро на экранах!
+  parentCycle: *cnews
+  publishDate: 2011-04-03
+  listImage: news/03042011.png
+  articleType: *atnews
+  articleArea: *aanews
+

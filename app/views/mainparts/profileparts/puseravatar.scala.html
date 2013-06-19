@@ -1,0 +1,1 @@
+@(avatar: S3File)@if(avatar==null){@routes.Assets.at("images/main/profile/stub-user-middle.gif")} else{@avatar.getUrl()}

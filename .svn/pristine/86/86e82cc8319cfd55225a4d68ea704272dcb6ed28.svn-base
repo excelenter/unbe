@@ -1,0 +1,46 @@
+@(user: User)(form: Form[Profile.Settings])
+
+@import mainparts.profile
+
+@profile(user){
+<div class="user-settings">
+    @helper.form(routes.Profile.saveSettings(user.id)) {
+    <h1>Настройки</h1>
+    @if(form.hasGlobalErrors) {
+    <p class="error">
+        @form.globalError.message
+    </p>
+    }
+    @if(flash.contains("success")) {
+    <p class="success">
+        @flash.get("success")
+    </p>
+    }
+    <dl>
+
+            <dt></a><label>Имя:</label></dt>
+            <dd><input type="text" name="name" placeholder="Имя" value="@user.name"></dd>
+
+            <dt><label>Email:</label></dt>
+            <dd><input type="email" name="email" placeholder="Email" value="@user.email"></dd>
+
+            <dt><label>Пароль:</label></dt>
+            <dd><input type="password" name="password" placeholder="Password" value=""></dd>
+
+            <dt><label>Фамилия:</label></dt>
+            <dd><input type="text" name="secondName" placeholder="Фамилия" value="@user.secondName"></dd>
+
+            <dt><label>Откуда:</label></dt>
+            <dd><input type="text" name="whereFrom" placeholder="Откуда" value="@user.whereFrom"></dd>
+
+            <dt><label>Аватар:</label></dt>
+            <dd><input type="text" name="userAvatar" placeholder="Ссылка на аватарку" value="@user.userAvatar"></dd>
+
+            <dd><button type="submit">Сохранить</button></dd>
+    </dl>
+
+
+
+    }
+</div>
+}

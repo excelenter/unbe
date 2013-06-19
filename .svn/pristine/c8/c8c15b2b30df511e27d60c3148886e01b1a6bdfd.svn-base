@@ -1,0 +1,56 @@
+package controllers;
+
+import models.Cycle;
+import models.User;
+import play.mvc.Controller;
+import play.mvc.Result;
+import views.html.mainparts.profileparts.pcyclesinfo;
+import views.html.mainparts.profileparts.pgeneralinfo;
+import views.html.mainparts.profileparts.pprojectsinfo;
+import views.html.mainparts.profileparts.pusersettings;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static play.data.Form.form;
+
+/**
+ * Created by:
+ * User: mayatskiy
+ * Date: 17.04.13
+ * Time: 19:11
+ */
+public class Profile extends Controller {
+
+    public static class Settings {
+
+        public String email;
+        public String password;
+        public String name;
+        public String secondName;
+        public String whereFrom;
+        public String userAvatar;
+        public User.Gender gender;
+
+    }
+
+
+    public static Result userCycles(long id) {
+        List<Cycle> cycles = Cycle.showAuthorCycles(User.find.byId(id));
+        return ok(pcyclesinfo.render(User.find.byId(id), cycles));
+    }
+
+
+    public static Result profile(long id){
+        return ok(pgeneralinfo.render(User.find.byId(id)));
+    }
+
+    public static Result userProjects(long id){
+        List<Project> projects = new ArrayList();
+        return ok(pprojectsinfo.render(User.find.byId(id), projects));
+    }
+
+    public static Result userSettings(long id){
+        return ok(pusersettings.render(User.find.byId(id), form(Settings.class)));
+    }
+}

@@ -1,0 +1,48 @@
+<div>
+    <div id="top-header">
+        <div id="announcement">
+            <img src="@routes.Assets.at("images/main/announcement.png")" alt="unbe logo"/>
+        </div>
+        <div id="logo">
+            <img src="@routes.Assets.at("images/main/unbe.png")" alt="unbe logo"/>
+        </div>
+    </div>
+    <div id="content-header">
+        <div class="menu-item-wrapper">
+            <a href="@routes.Article.lastnews()" title="Последние новости">
+                <span>Новости</span>
+            </a>
+        </div>
+        <div class="menu-item-wrapper">
+            <a href="@routes.Article.articles()" title="Почитать статьи">
+                <span>Статьи</span>
+            </a>
+        </div>
+        <div class="menu-item-wrapper">
+            <a href="@routes.Project.projects()" title="Поучавствовать в проектах">
+                <span>Проекты</span>
+            </a>
+        </div>
+        @if(session.get("email")==null) {
+        <div class="auth">
+            <a href="@routes.Application.login()" title="Кто я?">
+                <span>Войти</span>
+            </a>
+            <a href="@routes.Application.signUp()" title="Кто я?">
+                <span>Зарегистрироваться</span>
+            </a>
+        </div>
+        } else{
+        <div class="auth">
+            <a href="@routes.Profile.profile(session.get("id").toLong)">
+                <span>@session.get("name")</span>
+            </a>
+        </div>
+        <div class="auth">
+            <a href="@routes.Application.logout()">
+                <span>Выйти</span>
+            </a>
+        </div>
+        }
+    </div>
+</div>

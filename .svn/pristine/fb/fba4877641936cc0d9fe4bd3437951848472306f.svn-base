@@ -1,0 +1,43 @@
+usersStatuses:
+
+ - &usadmin !!models.UserStatus
+  title: Admin
+
+ - &usannon !!models.UserStatus
+  title: Annonimus
+
+ - &usnewbe !!models.UserStatus
+  title: Newbe
+
+users:
+
+ - &ubob !!models.User
+  email:      bob@gmail.com
+  name:       Bob
+  secondName: Bobovich
+  password:   secret
+  userStatus: *usannon
+
+ - &uvalery !!models.User
+  email:      valera-sochi@bk.ru
+  name:       Valery
+  secondName: Mayatskiy
+  password:   123
+  userStatus: *usadmin
+
+cycles:
+
+ - !!models.Cycle
+  title:          What did you do with foto?
+  description:    Simple tolking about your Mom
+  creator:        *uvalery
+
+ - !!models.Cycle
+  title:          How to use the camera!
+  description:    Simple works
+  creator:        *uvalery
+
+ - !!models.Cycle
+  title:          Seven!
+  description:    Simple seven
+  creator:        *ubob

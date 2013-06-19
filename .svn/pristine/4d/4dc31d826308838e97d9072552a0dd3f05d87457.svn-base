@@ -1,0 +1,18 @@
+@(user: User, cycles: List[Cycle])
+
+@import mainparts.profile
+
+@profile(user){
+<div class="cycle-list">
+    @cycles.map { cycle =>
+    <div class="cycle">
+        <h1>
+            <a href="@cycle.id">
+                <span>@cycle.title</span>
+            </a>
+        </h1>
+        <div class="description">@cycle.description</div>
+    </div>
+    }
+</div>
+}

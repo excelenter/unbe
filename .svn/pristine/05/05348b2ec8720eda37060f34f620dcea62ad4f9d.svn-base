@@ -1,0 +1,29 @@
+package controllers;
+
+import models.Cycle;
+import models.User;
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.Security;
+import views.html.mainparts.profileparts.pcyclesinfo;
+import views.html.mainparts.profileparts.pgeneralinfo;
+
+import java.util.List;
+
+/**
+ * Created by:
+ * User: mayatskiy
+ * Date: 17.04.13
+ * Time: 19:11
+ */
+public class Profile extends Controller {
+    public static Result userCycles(long id) {
+        List<Cycle> cycles = Cycle.showAuthorCycles(User.find.byId(id));
+        return ok(pcyclesinfo.render(User.find.byId(id), cycles));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result profile(long id){
+        return ok(pgeneralinfo.render(User.find.byId(id)));
+    }
+}

@@ -1,0 +1,28 @@
+@(user: User)
+@import profileparts._
+
+@main {
+    <div id="profile">
+        <div class="user_header">
+            <a class="avatar" href="#">
+                <img src="@routes.Assets.at("images/main/profile/stub-user-middle.gif")"/>
+            </a>
+            <h2 class="username">
+                <a href="">@user.name</a>
+            </h2>
+            <div class="clear"></div>
+        </div>
+        <div class="content-left">
+            @menu(user)
+            <div class="user-profile">
+                <div class="fullname">@user.name @user.secondName</div>
+                <dl>
+                    <dt>Дата регистрации:</dt>
+                    <dd>@user.registerDate.format("dd.MM.yyyy")</dd>
+                    <dt>Откуда:</dt>
+                    <dd>@user.whereFrom</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+}
