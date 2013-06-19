@@ -1,7 +1,0 @@
-@(users: List[User], cycles: List[Cycle], user: User)
-
-@main {
-
-
-
-}

@@ -1,9 +1,0 @@
-@(users: List[User], cycles: List[models.Cycle], user: User)
-
-@main {
-
-
-
-}{
-<div></div>
-}
